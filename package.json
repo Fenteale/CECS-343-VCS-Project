@@ -1,0 +1,22 @@
+{
+  "name": "cecs-343-vcs-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fenteale/CECS-343-VCS-Project.git"
+  },
+  "author": "",
+  "license": "SEE LICENCE IN LICENCE.md",
+  "bugs": {
+    "url": "https://github.com/Fenteale/CECS-343-VCS-Project/issues"
+  },
+  "homepage": "https://github.com/Fenteale/CECS-343-VCS-Project#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
