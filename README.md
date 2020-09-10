@@ -32,7 +32,7 @@ cd CECS-343-VCS-Project
 Now we need to install Express.  Enter this to do so:
 
 ```
-npm install express --save
+npm ci
 ```
 
 ### How to run
