@@ -1,0 +1,46 @@
+<!DOCTYPE html>  
+<html>  
+  
+<head>  
+    <title>  
+        Get Information
+    </title>  
+    <script type="text/javascript">
+    function GetFileinfo()
+        {
+        var selectedFILE = document.getElementById('file'); // GET THE FILE INPUT AS VARIABLE.
+
+        var totalNumber = 0;
+
+        // VALIDATE OR CHECK IF ANY FILE IS SELECTED.
+        if (selectedFILE.files.length > 0)
+        {
+            // RUN A LOOP TO CHECK EACH SELECTED FILE.
+            for (var i = 0; i <= selectedFILE.files.length - 1; i++)
+            {
+               
+                totalNumber = totalNumber + 1;
+                document.getElementById('info').innerHTML =
+                document.getElementById('info').innerHTML
+                + '<br /> ' + 'File Name is: <b>' + selectedFILE.files.item(i).name
+                + '</b>     The ArtID is: <b>' + selectedFILE.files.item(i).name //put get ArtID overhere
+                + '</b>     The Last Modified Date is: <b>' + selectedFILE.files.item(i).lastModifiedDate + "</b>.";
+            }
+        }
+        document.getElementById('total').innerHTML = "Total File(s): <b>" + totalNumber;
+    }
+    </script>
+</head>  
+
+<body>  
+    <p>
+        <input type="file" id="file" multiple onchange="GetFileinfo()" />
+    </p>
+
+    <div id="info"></div>
+    <p>
+        <div id="total"></div>
+    </p>
+</body>  
+  
+</html>
