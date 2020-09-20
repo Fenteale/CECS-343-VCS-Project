@@ -29,7 +29,7 @@ function checkSum() {
 		weight += charCodeAt[arguments[i]]*1 + charCodeAt[arguments[i + 1]]*3 + charCodeAt[arguments[i + 2]]*7 + charCodeAt[arguments[i + 3]]*11;
 	};
 	lastFour(weight)
-	return lastweight;
+	return weight;
 }
 
 function lastFour(x) {
