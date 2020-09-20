@@ -5,7 +5,7 @@
 </head>
 <body>
     <input type="text" placeholder="Enter input:" id="myInput">
-    <button type="button" onclick="getInputValue();">Get Value</button>
+    <button type="button" onclick="sepWords();">Get Value</button>
     
     <script>
         function sepWords(){
