@@ -1,46 +1,37 @@
-<!DOCTYPE html>  
-<html>  
-  
-<head>  
-    <title>  
-        Get Information
-    </title>  
-    <script type="text/javascript">
-    function GetFileinfo()
-        {
-        var selectedFILE = document.getElementById('file'); // GET THE FILE INPUT AS VARIABLE.
-
-        var totalNumber = 0;
-
-        // VALIDATE OR CHECK IF ANY FILE IS SELECTED.
-        if (selectedFILE.files.length > 0)
-        {
-            // RUN A LOOP TO CHECK EACH SELECTED FILE.
-            for (var i = 0; i <= selectedFILE.files.length - 1; i++)
-            {
-               
-                totalNumber = totalNumber + 1;
-                document.getElementById('info').innerHTML =
-                document.getElementById('info').innerHTML
-                + '<br /> ' + 'File Name is: <b>' + selectedFILE.files.item(i).name
-                + '</b>     The ArtID is: <b>' + selectedFILE.files.item(i).name //put get ArtID overhere
-                + '</b>     The Last Modified Date is: <b>' + selectedFILE.files.item(i).lastModifiedDate + "</b>.";
-            }
-        }
-        document.getElementById('total').innerHTML = "Total File(s): <b>" + totalNumber;
-    }
-    </script>
-</head>  
-
-<body>  
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+  <div>
     <p>
-        <input type="file" id="file" multiple onchange="GetFileinfo()" />
-    </p>
+    <input type="text" name="myInput" id="myInput" placeholder="Enter input:" onkeydown="if(event.keyCode ==13){sepWords();}" />
+		</p>
 
-    <div id="info"></div>
-    <p>
-        <div id="total"></div>
-    </p>
-</body>  
-  
+    <table id="table" border="1" cellpadding="0" cellspacing="0" width="100%">
+      <outputVal>
+        <th>History</th>
+      </outputVal>
+    </table>
+   </div>
+</body>
+
+<script>
+  function sepWords()
+  {
+    var inputVal = document.getElementById("myInput").value;
+    var words = inputVal.split(" ");
+    var outputVal = document.createElement("tr");
+
+    console.log(words);
+    
+    outputVal.innerHTML = "<td>"+inputVal+"</td>";
+    table.appendChild(outputVal);
+    document.getElementById("myInput").value = "";
+      
+	}
+
+  </script>
+
 </html>
