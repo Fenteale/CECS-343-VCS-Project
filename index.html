@@ -28,7 +28,12 @@
     
     outputVal.innerHTML = "<td>"+inputVal+"</td>";
     table.appendChild(outputVal);
-    document.getElementById("myInput").value = "";
+	document.getElementById("myInput").value = "";
+	
+	if(words[0] == "create")
+	{
+		document.location = "create?path=" + words[1];
+	}
       
    }
 
