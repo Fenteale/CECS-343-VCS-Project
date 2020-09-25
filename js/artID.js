@@ -23,10 +23,11 @@ function createArtID(file, reqPath) {
 	return artID;
 }
 
-function checkSum() {
+function checkSum(fileData) {
 	var weight;
-	for (var i = 0; i < arguments.length; i+=4) {
-		weight += charCodeAt[arguments[i]]*1 + charCodeAt[arguments[i + 1]]*3 + charCodeAt[arguments[i + 2]]*7 + charCodeAt[arguments[i + 3]]*11;
+	for (var i = 0; i < fileData.length; i+=4) {
+		//weight += charCodeAt[arguments[i]]*1 + charCodeAt[arguments[i + 1]]*3 + charCodeAt[arguments[i + 2]]*7 + charCodeAt[arguments[i + 3]]*11;
+		weight += fileData.charCodeAt(i)*1 + fileData.charCodeAt(i + 1)*3 + fileData.charCodeAt(i + 3)*7 + fileData.charCodeAt(i + 3)*11;
 	};
 	lastFour(weight)
 	return weight;
