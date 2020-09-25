@@ -12,7 +12,7 @@ function createArtID(file, reqPath) {
 	readable.on('readable', function() {
 		var artChar;
 		while(null !== (artChar = readable.read(1))) {
-			fileData.push(artChart);
+			fileData.push(artChar);
 		}
 	});
 
