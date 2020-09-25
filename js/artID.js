@@ -1,11 +1,11 @@
 var fs = require('fs');
 var path = require('path');
 
-function createArtID(file) {
+function createArtID(file, reqPath) {
 	var artID;
 	var fileData = [];
-	var relativePath = path.dirname(file);
-	var readable = fs.createReadStream(file, {
+	//var relativePath = path.dirname(file);
+	var readable = fs.createReadStream(path.join(reqPath,file), {
 		encoding: 'utf8',
 		fd: null,
 	});
