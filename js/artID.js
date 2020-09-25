@@ -27,7 +27,7 @@ function checkSum(fileData) {
 	var weight;
 	for (var i = 0; i < fileData.length; i+=4) {
 		//weight += charCodeAt[arguments[i]]*1 + charCodeAt[arguments[i + 1]]*3 + charCodeAt[arguments[i + 2]]*7 + charCodeAt[arguments[i + 3]]*11;
-		weight += fileData.charCodeAt(i)*1 + fileData.charCodeAt(i + 1)*3 + fileData.charCodeAt(i + 3)*7 + fileData.charCodeAt(i + 3)*11;
+		weight += fileData[i].charCodeAt(0)*1 + fileData[i + 1].charCodeAt(0)*3 + fileData[i + 2].charCodeAt(0)*7 + fileData[i + 3].charCodeAt(0)*11;
 	};
 	lastFour(weight)
 	return weight;
