@@ -2,8 +2,9 @@ var fs = require('fs');
 var path = require('path');
 
 function createArtID(file, reqPath, projName) {
-	//var relativePath = path.dirname(file);
-	var relativePath = path.join(projName, file);
+	var relativePath = path.dirname(path.join(projName, file));
+	//var relativePath = path.join(projName, file);
+	//var relativePath = path.relative(projName, file);
 	console.log(relativePath);
 
 	var data = fs.readFileSync(path.join(reqPath, file), 
@@ -21,9 +22,9 @@ function createArtID(file, reqPath, projName) {
 function checkSum(fileData) {
 	var weight = 0;
 	if (fileData.length < 4) {
-		if (fileData.length = 1) {
+		if (fileData.length == 1) {
 			weight = fileData.charCodeAt(0)*1;
-		} else if (fileData.length = 2) {
+		} else if (fileData.length == 2) {
 			weight = fileData.charCodeAt(0)*1 + fileData.charCodeAt(1)*3;
 		} else {
 			weight = fileData.charCodeAt(0)*1 + fileData.charCodeAt(1)*3 + fileData.charCodeAt(2)*7;
@@ -55,18 +56,19 @@ function lastFour(x) {
 }
 
 function reverseCheckSum(removed) { //I don't know why this part isn't working properly
+	console.log(removed);
 	var weight = 0;
-	//if (removed.length = 1) {
-	//	weight = removed.charCodeAt(0)*1;
-	//} else if (removed.length = 2) {
-	//	weight = removed.charCodeAt(0)*3 + removed.charCodeAt(1)*1;
-	//} else {
+	if (removed.length == 1) {
+		weight = removed.charCodeAt(0)*1;
+	} else if (removed.length == 2) {
+		weight = removed.charCodeAt(0)*3 + removed.charCodeAt(1)*1;
+	} else {
 		weight = removed.charCodeAt(0)*7 + removed.charCodeAt(1)*3 + removed.charCodeAt(2)*1;
-	//};
+	};
 	console.log(removed.charCodeAt(0));
 	console.log(removed.charCodeAt(1));
 	console.log(removed.charCodeAt(2));
-	console.log(removed);
+	console.log(weight);
 	return weight;
 }
 
