@@ -8,6 +8,7 @@ var artID = require('./js/artID.js');
 var manifest = require('./js/manifest.js');
 
 const { createArtID } = require('./js/artID.js');
+var fs = require('fs');
 
 app.get('/', function (req, res) { //Set page-gen fcn for URL roolt request.
 	res.sendFile(path.join(__dirname, 'index.html'));
@@ -15,10 +16,15 @@ app.get('/', function (req, res) { //Set page-gen fcn for URL roolt request.
 
 
 app.get('/create', function (req, res) {
-	var dirs = req.query.path.split('/');
+	if(!fs.existsSync(req.query.repoPath))
+	{
+		fs.mkdirSync(req.query.repoPath);
+	}
+
+	var dirs = req.query.srcPath.split('/');
 	if(dirs.length < 2)
 	{
-		dirs = req.query.path.split('\\');
+		dirs = req.query.srcPath.split('\\');
 	}
 	var projName;
 	if(dirs[dirs.length - 1] == '')
@@ -30,11 +36,20 @@ app.get('/create', function (req, res) {
 		projName = dirs[dirs.length - 1];
 	}
 	console.log('Project name: ' + projName);
-	var files = getFs.getFileArray(req.query.path);
+	var files = getFs.getFileArray(req.query.srcPath);
 	console.log(files);
+
+	var artIDs = [];
+
+	var fileDirs = [];
 	files.forEach(file => {
-		console.log(artID.createArtID(file, req.query.path, projName));
+		var aID = artID.createArtID(file, req.query.srcPath, projName)
+		console.log(aID);
+		artIDs.push(aID);
+		fileDirs.push(path.dirname(file));
 	});
+	manifest.createManifest(req.query.srcPath, req.query.repoPath, artIDs, fileDirs);
+
 	res.sendFile(path.join(__dirname, 'index.html'));
 });
 
