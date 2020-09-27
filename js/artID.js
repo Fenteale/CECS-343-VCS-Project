@@ -10,8 +10,6 @@ function createArtID(file, reqPath, projName) {
 	var data = fs.readFileSync(path.join(reqPath, file), 
               {encoding:'utf8', flag:'r'}); 
 
-	console.log(data);
-
 	var a = checkSum(data);
 	var b = lastFour(data.length);
 	var c = checkSum(relativePath);
@@ -57,7 +55,6 @@ function lastFour(x) {
 }
 
 function reverseCheckSum(removed) { //I don't know why this part isn't working properly
-	console.log(removed);
 	var weight = 0;
 	if (removed.length == 1) {
 		weight = removed.charCodeAt(0)*1;
