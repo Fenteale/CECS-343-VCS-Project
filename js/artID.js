@@ -13,7 +13,7 @@ function createArtID(file, reqPath, projName) {
 	var a = checkSum(data);
 	var b = lastFour(data.length);
 	var c = checkSum(relativePath);
-	var artID = 'P' + a + '-' + 'L' + b + '-' + 'C' + c + '.txt'; 
+	var artID = 'P' + a + '-' + 'L' + b + '-' + 'C' + c + path.extname(file); 
 	return artID;
 }
 
