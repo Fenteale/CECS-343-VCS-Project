@@ -1,43 +1,73 @@
 var fs = require('fs');
 var path = require('path');
 
-function createArtID(file, reqPath) {
-	var artID;
-	var fileData = [];
+function createArtID(file, reqPath, projName) {
 	//var relativePath = path.dirname(file);
-	var readable = fs.createReadStream(path.join(reqPath,file), {
-		encoding: 'utf8',
-		fd: null,
-	});
-	readable.on('readable', function() {
-		var artChar;
-		while(null !== (artChar = readable.read(1))) {
-			fileData.push(artChar);
-		}
-	});
+	var relativePath = path.join(projName, file);
+	console.log(relativePath);
 
-	var a = checkSum(fileData);
-	var b = lastFour(file.size);
+	var data = fs.readFileSync(path.join(reqPath, file), 
+              {encoding:'utf8', flag:'r'}); 
+
+	console.log(data);
+
+	var a = checkSum(data);
+	var b = lastFour(data.length);
 	var c = checkSum(relativePath);
-	artID = 'P' + a + '-' + 'L' + b + '-' + 'C' + c + '.txt'; 
+	var artID = 'P' + a + '-' + 'L' + b + '-' + 'C' + c + '.txt'; 
 	return artID;
 }
 
 function checkSum(fileData) {
-	var weight;
-	for (var i = 0; i < fileData.length; i+=4) {
-		//weight += charCodeAt[arguments[i]]*1 + charCodeAt[arguments[i + 1]]*3 + charCodeAt[arguments[i + 2]]*7 + charCodeAt[arguments[i + 3]]*11;
-		weight += fileData[i].charCodeAt(0)*1 + fileData[i + 1].charCodeAt(0)*3 + fileData[i + 2].charCodeAt(0)*7 + fileData[i + 3].charCodeAt(0)*11;
+	var weight = 0;
+	if (fileData.length < 4) {
+		if (fileData.length = 1) {
+			weight = fileData.charCodeAt(0)*1;
+		} else if (fileData.length = 2) {
+			weight = fileData.charCodeAt(0)*1 + fileData.charCodeAt(1)*3;
+		} else {
+			weight = fileData.charCodeAt(0)*1 + fileData.charCodeAt(1)*3 + fileData.charCodeAt(2)*7;
+		};
+	} else {
+		var removed = '';
+		var removedWeight = 0;
+		while (fileData.length %4 !== 0) {
+			removed = removed.concat(fileData.slice(fileData.length - 1));
+			fileData = fileData.slice(0, -1);
+		};
+		removedWeight = reverseCheckSum(removed);
+		console.log(removed);
+		console.log(removedWeight);
+		console.log(reverseCheckSum(removed));
+		for (var i = 0; i < fileData.length; i += 4) {
+			weight += fileData.charCodeAt(i)*1 + fileData.charCodeAt(i + 1)*3 + fileData.charCodeAt(i + 2)*7 + fileData.charCodeAt(i + 3)*11;
+		};
 	};
-	lastFour(weight)
+	weight = lastFour(weight + removedWeight);
 	return weight;
 }
 
 function lastFour(x) {
-	if (x >= 1000) {
+	if (x >= 10000) {
 		x = x.toString().slice(-4);
 	}
 	return x;
+}
+
+function reverseCheckSum(removed) { //I don't know why this part isn't working properly
+	var weight = 0;
+	//if (removed.length = 1) {
+	//	weight = removed.charCodeAt(0)*1;
+	//} else if (removed.length = 2) {
+	//	weight = removed.charCodeAt(0)*3 + removed.charCodeAt(1)*1;
+	//} else {
+		weight = removed.charCodeAt(0)*7 + removed.charCodeAt(1)*3 + removed.charCodeAt(2)*1;
+	//};
+	console.log(removed.charCodeAt(0));
+	console.log(removed.charCodeAt(1));
+	console.log(removed.charCodeAt(2));
+	console.log(removed);
+	return weight;
 }
 
 module.exports = { createArtID };
