@@ -5,6 +5,8 @@ const path = require('path');
 //app.use('/js', express.static(__dirname + '/js'));
 var getFs = require('./js/getfiles.js');
 var artID = require('./js/artID.js');
+var manifest = require('./js/manifest.js');
+
 const { createArtID } = require('./js/artID.js');
 
 app.get('/', function (req, res) { //Set page-gen fcn for URL roolt request.
@@ -28,7 +30,7 @@ app.get('/create', function (req, res) {
 	var files = getFs.getFileArray(req.query.path);
 	console.log(files);
 	files.forEach(file => {
-		console.log(createArtID(file, req.query.path, projName));
+		console.log(artID.createArtID(file, req.query.path, projName));
 	});
 	res.sendFile(path.join(__dirname, 'index.html'));
 });
