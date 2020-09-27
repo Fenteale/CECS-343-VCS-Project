@@ -10,13 +10,16 @@ var manifest = require('./js/manifest.js');
 const { createArtID } = require('./js/artID.js');
 
 app.get('/', function (req, res) { //Set page-gen fcn for URL roolt request.
-	//res.send('Hello World!'); //Send webpage containing "Hello Wolrd!".
 	res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 
 app.get('/create', function (req, res) {
-	var dirs = req.query.path.split(path.sep);
+	var dirs = req.query.path.split('/');
+	if(dirs.length < 2)
+	{
+		dirs = req.query.path.split('\\');
+	}
 	var projName;
 	if(dirs[dirs.length - 1] == '')
 	{
