@@ -21,6 +21,8 @@ function createArtID(file, reqPath, projName) {
 
 function checkSum(fileData) {
 	var weight = 0;
+	var removed = '';
+	var removedWeight = 0;
 	if (fileData.length < 4) {
 		if (fileData.length == 1) {
 			weight = fileData.charCodeAt(0)*1;
@@ -30,10 +32,9 @@ function checkSum(fileData) {
 			weight = fileData.charCodeAt(0)*1 + fileData.charCodeAt(1)*3 + fileData.charCodeAt(2)*7;
 		};
 	} else {
-		var removed = '';
-		var removedWeight = 0;
-		while (fileData.length %4 !== 0) {
-			removed = removed.concat(fileData.slice(fileData.length - 1));
+		while (fileData.length %4 != 0) {
+			//removed = removed.concat(fileData.slice(fileData.length - 1));
+			removed = removed + fileData.slice(fileData.length - 1);
 			fileData = fileData.slice(0, -1);
 		};
 		removedWeight = reverseCheckSum(removed);
@@ -44,7 +45,11 @@ function checkSum(fileData) {
 			weight += fileData.charCodeAt(i)*1 + fileData.charCodeAt(i + 1)*3 + fileData.charCodeAt(i + 2)*7 + fileData.charCodeAt(i + 3)*11;
 		};
 	};
-	weight = lastFour(weight + removedWeight);
+	if (removed == '') {
+		weight = lastFour(weight);
+	} else {
+		weight = lastFour(weight + removedWeight);
+	};
 	return weight;
 }
 
