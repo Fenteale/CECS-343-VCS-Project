@@ -8,6 +8,7 @@ var artID = require('./js/artID.js');
 var manifest = require('./js/manifest.js');
 
 const { createArtID } = require('./js/artID.js');
+var fs = require('fs');
 
 app.get('/', function (req, res) { //Set page-gen fcn for URL roolt request.
 	res.sendFile(path.join(__dirname, 'index.html'));
@@ -15,6 +16,11 @@ app.get('/', function (req, res) { //Set page-gen fcn for URL roolt request.
 
 
 app.get('/create', function (req, res) {
+	if(!fs.existsSync(req.query.repoPath))
+	{
+		fs.mkdirSync(req.query.repoPath);
+	}
+
 	var dirs = req.query.srcPath.split('/');
 	if(dirs.length < 2)
 	{
