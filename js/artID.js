@@ -38,9 +38,6 @@ function checkSum(fileData) {
 			fileData = fileData.slice(0, -1);
 		};
 		removedWeight = reverseCheckSum(removed);
-		console.log(removed);
-		console.log(removedWeight);
-		console.log(reverseCheckSum(removed));
 		for (var i = 0; i < fileData.length; i += 4) {
 			weight += fileData.charCodeAt(i)*1 + fileData.charCodeAt(i + 1)*3 + fileData.charCodeAt(i + 2)*7 + fileData.charCodeAt(i + 3)*11;
 		};
@@ -70,10 +67,6 @@ function reverseCheckSum(removed) { //I don't know why this part isn't working p
 	} else {
 		weight = removed.charCodeAt(0)*7 + removed.charCodeAt(1)*3 + removed.charCodeAt(2)*1;
 	};
-	console.log(removed.charCodeAt(0));
-	console.log(removed.charCodeAt(1));
-	console.log(removed.charCodeAt(2));
-	console.log(weight);
 	return weight;
 }
 
