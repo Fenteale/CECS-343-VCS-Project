@@ -3,7 +3,6 @@ var path = require('path');
 
 function getFileArray(dir)
 {
-	console.log(dir);
 	var fileNames = [];
 	fs.readdirSync(dir).forEach( file => {
 		if(fs.statSync(path.join(dir, file)).isDirectory())
