@@ -2,7 +2,7 @@ var fs = require('fs');
 var path = require('path');
 
 function createArtID(file, reqPath, projName) {
-	var relativePath = path.dirname(path.join(projName, file));
+	var relativePath = path.dirname(path.join(projName, file)) + path.sep;
 	//var relativePath = path.join(projName, file);
 	//var relativePath = path.relative(projName, file);
 	console.log(relativePath);
@@ -33,7 +33,6 @@ function checkSum(fileData) {
 		};
 	} else {
 		while (fileData.length %4 != 0) {
-			//removed = removed.concat(fileData.slice(fileData.length - 1));
 			removed = removed + fileData.slice(fileData.length - 1);
 			fileData = fileData.slice(0, -1);
 		};
