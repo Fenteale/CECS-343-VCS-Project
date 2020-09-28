@@ -47,7 +47,7 @@ function checkSum(fileData) {
 			fileData = fileData.slice(0, -1);
 		};
 		removedWeight = reverseCheckSum(removed); //Gets the the checksum of the removed characters
-		for (var i = 0; i < fileData.length; i += 4) { Loop that checks most of the calculations of the string
+		for (var i = 0; i < fileData.length; i += 4) { //Loop that checks most of the calculations of the string
 			weight += fileData.charCodeAt(i)*1 + fileData.charCodeAt(i + 1)*3 + fileData.charCodeAt(i + 2)*7 + fileData.charCodeAt(i + 3)*11;
 		};
 	};
