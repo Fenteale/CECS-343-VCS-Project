@@ -3,7 +3,12 @@ var path = require('path');
 
 function createManifest(srcPath, repoPath, artIDs, relPaths)
 {
-	var dest = path.join(repoPath, '.man-1.rc');
+	var rc_code = 1;
+	while(fs.existsSync(path.join(repoPath, '.man-' + String(rc_code) + '.rc')))
+	{
+		rc_code += 1;
+	}
+	var dest = path.join(repoPath, '.man-' + String(rc_code) + '.rc');
 	var writeStream = fs.createWriteStream(dest);
 	writeStream.write('create ' + srcPath + ' ' + repoPath + '\n');
 	var presentTime = new Date();
