@@ -1,3 +1,15 @@
+//###########################################################
+//
+// getfiles.js
+//
+// Author:
+// contact:
+//
+// Description: getFileArray returns an array of files within
+// the directory passed as a parameter to function.
+//
+//###########################################################
+
 var fs = require('fs');
 var path = require('path');
 
