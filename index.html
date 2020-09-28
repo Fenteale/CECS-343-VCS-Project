@@ -6,7 +6,8 @@
 // Author:
 // contact:
 //
-// Description: 
+// Description: webpage of application.
+//              Let user input information in textbox and list history in a table.
 //
 //###########################################################
 -->
@@ -17,11 +18,12 @@
 <meta charset="UTF-8">
 </head>
 <body>
+	<!-- the textbox function for getting user input and use "return" as a submission -->
   <div>
     <p>
     <input type="text" name="myInput" id="myInput" placeholder="Enter input:" onkeydown="if(event.keyCode ==13){sepWords();}" />
     </p>
-
+	  <!-- the table function for list all information of userinput -->
     <table id="table" border="1" cellpadding="0" cellspacing="0" width="100%">
       <outputVal>
         <th>History</th>
@@ -30,22 +32,25 @@
    </div>
 </body>
 
+	
 <script>
   function sepWords()
   {
-    var inputVal = document.getElementById("myInput").value;
-    var words = inputVal.split(" ");
-    var outputVal = document.createElement("tr");
+    var inputVal = document.getElementById("myInput").value; //get input from textbox
+    var words = inputVal.split(" "); // split input by " "
+    var outputVal = document.createElement("tr"); //create the table
 
-    console.log(words);
+    console.log(words); // display the userinput
     
-    outputVal.innerHTML = "<td>"+inputVal+"</td>";
-    table.appendChild(outputVal);
-	document.getElementById("myInput").value = "";
+    outputVal.innerHTML = "<td>"+inputVal+"</td>"; //display in history table
+	  
+    table.appendChild(outputVal); //appends the user input information into table
+
+	  document.getElementById("myInput").value = "";//get the next input from textbox
 	
-	if(words[0] == "create")
+	if(words[0] == "create")// Identify the input starts with "create"
 	{
-		document.location = "create?srcPath=" + words[1] + "&repoPath=" + words[2];
+		document.location = "create?srcPath=" + words[1] + "&repoPath=" + words[2]; // then set the document location, the words[1]is srcPath, and the words[2]is repoPath
 	}
       
    }
