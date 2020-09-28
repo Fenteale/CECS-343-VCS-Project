@@ -1,3 +1,16 @@
+//###########################################################
+//
+// manifest.js
+//
+// Author:
+// contact:
+//
+// Description: createManifest creates a manifest file in the
+// repo directory based on the artifact IDs, list of files,
+// and command issues.
+//
+//###########################################################
+
 var fs = require('fs');
 var path = require('path');
 
