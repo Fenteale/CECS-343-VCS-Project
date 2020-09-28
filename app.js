@@ -6,6 +6,7 @@ const path = require('path');
 var getFs = require('./js/getfiles.js');
 var artID = require('./js/artID.js');
 var manifest = require('./js/manifest.js');
+var pn = require('./js/projName.js');
 
 const { createArtID } = require('./js/artID.js');
 var fs = require('fs');
@@ -21,21 +22,9 @@ app.get('/create', function (req, res) {
 		fs.mkdirSync(req.query.repoPath);
 	}
 
-	var dirs = req.query.srcPath.split('/');
-	if(dirs.length < 2)
-	{
-		dirs = req.query.srcPath.split('\\');
-	}
-	var projName;
-	if(dirs[dirs.length - 1] == '')
-	{
-		projName = dirs[dirs.length - 2];
-	}
-	else
-	{
-		projName = dirs[dirs.length - 1];
-	}
-	console.log('Project name: ' + projName);
+	var projName = pn.getProjectName(req.query.srcPath);
+
+
 	var files = getFs.getFileArray(req.query.srcPath);
 	console.log(files);
 
@@ -47,6 +36,8 @@ app.get('/create', function (req, res) {
 		console.log(aID);
 		artIDs.push(aID);
 		fileDirs.push(path.dirname(file));
+
+		fs.copyFileSync(path.join(req.query.srcPath, file), path.join(req.query.repoPath, aID));
 	});
 	manifest.createManifest(req.query.srcPath, req.query.repoPath, artIDs, fileDirs);
 
