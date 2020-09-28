@@ -52,9 +52,12 @@ http://localhost:3000/
 In the box that says "Enter input:" you can enter any command.  Current commands:
 
 - 'create' - creates a snapshot of a source directory and outputs to a repository directory
-		Usage: create srcDir repoDir
-			srcDir	- full path to source directory
-			repoDir - full path to repository directory
+		Usage:
+		``` 
+		create srcDir repoDir
+		srcDir	- full path to source directory
+		repoDir - full path to repository directory
+		```
 
 		Example:
 		For windows:
