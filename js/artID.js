@@ -42,7 +42,7 @@ function checkSum(fileData) {
 			weight = fileData.charCodeAt(0)*1 + fileData.charCodeAt(1)*3 + fileData.charCodeAt(2)*7;
 		};
 	} else { //Perform checksum calculation if the string length is greater or equal to four
-		while (fileData.length %4 != 0) { Removes the last character of the string until the string length is disible by four
+		while (fileData.length %4 != 0) { //Removes the last character of the string until the string length is disible by four
 			removed += fileData.slice(fileData.length - 1);
 			fileData = fileData.slice(0, -1);
 		};
