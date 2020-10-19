@@ -23,8 +23,17 @@ var artID = require('./js/artID.js');
 var manifest = require('./js/manifest.js');
 var pn = require('./js/projName.js');
 
+function getWebpageData(extraData)
+{
+	return fs.readFileSync(path.join(__dirname, 'index_top.html'), 
+			  {encoding:'utf8', flag:'r'}) + extraData +
+			  fs.readFileSync(path.join(__dirname, 'index_bot.html'), 
+              {encoding:'utf8', flag:'r'}); 
+}
+
 app.get('/', function (req, res) { //Set page-gen fcn for URL root request.
-	res.sendFile(path.join(__dirname, 'index.html'));
+
+	res.send(getWebpageData(''));
 });
 
 
@@ -60,7 +69,27 @@ app.get('/create', function (req, res) {
 	manifest.createManifest(req.query.srcPath, req.query.repoPath, artIDs, fileDirs);
 
 	//then display the webpage again.
-	res.sendFile(path.join(__dirname, 'index.html'));
+	res.send(getWebpageData("<p>Created repo.</p>"));
+});
+
+app.get('/list', function (req, res) {
+	//Run command to list and return it to the argument of getWebpageData
+	res.send(getWebpageData(/* call to list function here */));
+});
+
+app.get('/label', function (req, res) {
+	//Run command to label here.
+	res.send(getWebpageData("<p>Successfully set label.</p>"));
+});
+
+app.get('/checkout', function (req, res) {
+	//Run command to checkout here.
+	res.send(getWebpageData("<p>Successfully ran checkout.</p>"));
+});
+
+app.get('/checkin', function (req, res) {
+	//Run command to checkin here.
+	res.send(getWebpageData("<p>Successfully ran checkin.</p>"));
 });
 
 app.listen(3000, function () { // Set callback action function on network port.

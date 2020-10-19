@@ -1,0 +1,54 @@
+	<!-- the textbox function for getting user input and use "return" as a submission -->
+	<div>
+		<p>
+		<input type="text" name="myInput" id="myInput" placeholder="Enter input:" onkeydown="if(event.keyCode ==13){sepWords();}" />
+		</p>
+		  <!-- the table function for list all information of userinput -->
+		<table id="table" border="1" cellpadding="0" cellspacing="0" width="100%">
+		  <outputVal>
+			<th>History</th>
+		  </outputVal>
+		</table>
+	   </div>
+	</body>
+	
+		
+	<script>
+	  function sepWords()
+	  {
+		var inputVal = document.getElementById("myInput").value; //get input from textbox
+		var words = inputVal.split(" "); // split input by a space
+		var outputVal = document.createElement("tr"); //create the table
+	
+		console.log(words); // display the userinput
+		
+		outputVal.innerHTML = "<td>"+inputVal+"</td>"; //display in history table
+		  
+		table.appendChild(outputVal); //appends the user input information into table
+	
+		  document.getElementById("myInput").value = "";//get the next input from textbox
+	  
+		switch(words[0]) {
+		  case "create": // Identify the input starts with "create"
+		  document.location = "create?srcPath=" + words[1] + "&repoPath=" + words[2]; // then set the document location, the words[1]is srcPath, and the words[2]is repoPath
+		  break;
+		  case "list":
+			  document.location = "list?repoPath=" + words[1];
+			break;
+		  case "label":
+			  document.location = "label?repoPath=" + words[1] + "&manName=" + words[2] + "&labelName=" + words[3];
+			break;
+		  case "checkout":
+		  document.location = "checkout?repoPath=" + words[1] + "&srcPath=" + words[2];
+			break;
+		  case "checkin":
+		  document.location = "checkin?srcPath=" + words[1] + "&repoPath=" + words[2];
+			break;
+		}
+			
+		}
+	
+	  </script>
+	
+	</html>
+	
