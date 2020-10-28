@@ -87,9 +87,41 @@ app.get('/checkout', function (req, res) {
 	res.send(getWebpageData("<p>Successfully ran checkout.</p>"));
 });
 
-app.get('/checkin', function (req, res) {
-	//Run command to checkin here.
-	res.send(getWebpageData("<p>Successfully ran checkin.</p>"));
+app.get('/checkin', function (req, res) {  //lotsa this copied from create
+	//if user sends a request to /checkin, then we need to make a snapshot
+	if(!fs.existsSync(req.query.repoPath))
+	{
+		res.send(getWebpageData("<p>Directory is not a repository.</p>"));
+	}
+	else
+	{
+
+		var projName = pn.getProjectName(req.query.srcPath); //get project name
+
+
+		var files = getFs.getFileArray(req.query.srcPath); //get array of files
+		console.log(files); //print them to console for debugging.
+
+		var artIDs = [];
+
+		var fileDirs = [];
+		files.forEach(file => {
+			//for each file in the files array
+			var aID = artID.createArtID(file, req.query.srcPath, projName); //createArtID for each file
+			console.log(aID); //print it to console
+			artIDs.push(aID); //add it to the array of artIDs
+			fileDirs.push(path.dirname(file)); //add relative path of file to the fileDirs array
+
+			//copy each file in the files array to the repo directory and name it based off the artID.
+			fs.copyFileSync(path.join(req.query.srcPath, file), path.join(req.query.repoPath, aID));
+		});
+
+		//create manifest file.
+		manifest.createManifest(req.query.srcPath, req.query.repoPath, artIDs, fileDirs);
+
+		//then display the webpage again.
+		res.send(getWebpageData("<p>Successfully ran checkin.</p>"));
+	}
 });
 
 app.listen(3000, function () { // Set callback action function on network port.
