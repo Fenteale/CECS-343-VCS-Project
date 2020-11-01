@@ -80,7 +80,7 @@ app.get('/list', function (req, res) {
 
 app.get('/label', function (req, res) {
 	var pathOfMan = path.join(req.query.repoPath, req.query.manName);
-	switch(label.setLabel(pathOfMan, req.query.labelName))
+	switch(label.setLabel(req.query.repoPath, pathOfMan, req.query.labelName))
 	{
 		case 0:
 			res.send(getWebpageData("<p>Successfully set label.</p>"));
