@@ -22,6 +22,7 @@ var getFs = require('./js/getfiles.js');
 var artID = require('./js/artID.js');
 var manifest = require('./js/manifest.js');
 var pn = require('./js/projName.js');
+var label = require('./js/label.js');
 
 function getWebpageData(extraData)
 {
@@ -78,8 +79,20 @@ app.get('/list', function (req, res) {
 });
 
 app.get('/label', function (req, res) {
-	//Run command to label here.
-	res.send(getWebpageData("<p>Successfully set label.</p>"));
+	var pathOfMan = path.join(req.query.repoPath, req.query.manName);
+	switch(label.setLabel(pathOfMan, req.query.labelName))
+	{
+		case 0:
+			res.send(getWebpageData("<p>Successfully set label.</p>"));
+			break;
+		case -1:
+			res.send(getWebpageData("<p>Failed to set label, that label already exists for that manifest.</p>"));
+			break;
+		default:
+			res.send(getWebpageData("<p>Failed to set label.</p>"));
+			break;
+	}
+		
 });
 
 app.get('/checkout', function (req, res) {

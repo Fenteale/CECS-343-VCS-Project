@@ -29,6 +29,7 @@ function createManifest(srcPath, repoPath, artIDs, relPaths)
 	var time = presentTime.getHours() + ':' + presentTime.getMinutes() + ':' + presentTime.getSeconds(); //creates time in correct format
 	var current = date + ' ' + time; //puts together full date and time in correct format
 	writeStream.write(current + '\n'); //writes the date and time to file
+	writeStream.write("labels: \n");
 	var artRel = "";
 	for(var i = 0; i < artIDs.length; i++) { //creates a String with artID's and relative paths
 		artRel += artIDs[i] + ' @ ' + relPaths[i] + '\n'; 
