@@ -31,7 +31,7 @@ function createArtID(file, reqPath, projName) {
 //This function performs the calculations to actually get the checksum for Path, Length and Characters
 function checkSum(fileData) {
 	var weight = 0; //Initialize the weighted checksum
-	var removed = ''; //Initial the characters to remove if file length is not divisible by four
+	var removed = ''; //Initialize the characters to remove if file length is not divisible by four
 	var removedWeight = 0; //Initialize the weighted checksum for the characters removed
 	if (fileData.length < 4) { //Perform checksum calculation if the string length is less than four
 		if (fileData.length == 1) {

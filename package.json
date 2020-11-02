@@ -1,7 +1,7 @@
 {
   "name": "cecs-343-vcs-project",
   "version": "1.0.0",
-  "description": "",
+  "description": "### How to build",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

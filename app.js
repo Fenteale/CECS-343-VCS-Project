@@ -97,6 +97,29 @@ app.get('/label', function (req, res) {
 
 app.get('/checkout', function (req, res) {
 	//Run command to checkout here.
+	var pathOfMan = path.join(req.query.repoPath, req.query.manName);
+
+	var files = getFs.getFileArray(req.query.srcPath); //get array of files
+	console.log(files); //print them to console for debugging.
+
+	var fileDirs = [];
+	files.forEach(file => {
+		//for each file in the files array
+        fileDirs.push(path.dirname(file)); //add relative path of file to the fileDirs array
+		
+		//checks if files from the repo are the ones from the manifest
+        fs.readFile(pathOfMan, function (err, data) {
+            if (err) throw err;
+            if(data.includes(files)){
+				//copy each file in the files array to the repo directory and name it based off the artID.
+				fs.copyFileSync(path.join(req.query.srcPath, file), path.join(req.query.targetPath, files));
+            }
+        });
+	});
+
+	//change this for this function
+	manifest.createManifest(req.query.srcPath, req.query.targetPath, artIDs, fileDirs);
+
 	res.send(getWebpageData("<p>Successfully ran checkout.</p>"));
 });
 
