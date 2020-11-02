@@ -1,18 +1,27 @@
+//######################################################################################################
+//
+// checkout.js
+//
+// Author:
+// Contact:
+//
+// Description: Recreates the snapshot of the project tree into an empty folder from selecting
+// a particular manigest file in the repository.
+//
+//######################################################################################################
 
+//included functions to run the file
 var fs = require('fs');
 var path = require('path');
-var getFs = require('./getfiles.js');
-var manifest = require('./manifest.js');
 const { getLabels } = require('./label.js');
 
 function checkout(req){
-	//Run command to checkout here.
-	var pathOfMan = path.join(req.query.repoPath, req.query.manName);
+	var pathOfMan = path.join(req.query.repoPath, req.query.manName); //gets the manifest file
 
-	//LABEL STUFF
+	//checks if the manifest has labels
 	if(!fs.existsSync(pathOfMan))
 	{
-		var realManFile;
+		var realManFile; //original manifest name
 		var rc_code = 1;
 		var manFiles = [];
 
@@ -29,14 +38,6 @@ function checkout(req){
 		});
 		var pathOfMan = path.join(req.query.repoPath, realManFile);
 	}
-	//END LABEL STUFF
-
-
-
-
-
-
-	
 
 	if(!fs.existsSync(req.query.targetPath))
 	{
@@ -49,6 +50,7 @@ function checkout(req){
 
 	var files = [];
 
+	//recreates all the files from the manifest with their respective relative folder
 	fileLines.forEach(l => {
 		var items = l.split(" @ ");
 
@@ -65,20 +67,19 @@ function checkout(req){
 			}
 		}
 
-		var fileToCopy = path.join(req.query.repoPath, items[0]);
-		var fileToPaste = path.join(req.query.targetPath, items[1], items[2]);
+		var fileToCopy = path.join(req.query.repoPath, items[0]); //files to copy from repo folder
+		var fileToPaste = path.join(req.query.targetPath, items[1], items[2]); //files to clone onto target folder
 		files.push(fileToPaste);
 		fs.copyFileSync(fileToCopy, fileToPaste);
 	});
 
-	//change this for this function
+	//creates the checkout manifest
 	createCheckoutManifest(req.query.repoPath, req.query.targetPath, req.query.manName, files);
 }
 
-
+//modified version of create manifest for the checkout function that includes the arguments
 function createCheckoutManifest(repoPath, targetPath, manName, files)
 {
-
 	var rc_code = 1;
 	while(fs.existsSync(path.join(targetPath, '.man-' + String(rc_code) + '.rc')))
 	{
