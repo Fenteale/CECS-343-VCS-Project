@@ -24,6 +24,7 @@ var manifest = require('./js/manifest.js');
 var pn = require('./js/projName.js');
 var label = require('./js/label.js');
 var checkout = require('./js/checkout.js');
+var listCmd = require('./js/list.js');
 
 function getWebpageData(extraData)
 {
@@ -76,7 +77,7 @@ app.get('/create', function (req, res) {
 
 app.get('/list', function (req, res) {
 	//Run command to list and return it to the argument of getWebpageData
-	res.send(getWebpageData(/* call to list function here */));
+	res.send(getWebpageData(listCmd.listCommand(req.query.repoPath)));
 });
 
 app.get('/label', function (req, res) {

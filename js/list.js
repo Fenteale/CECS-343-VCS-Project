@@ -1,15 +1,26 @@
 const fs = require('fs');
 var path = require('path');
+const { getLabels } = require('./label.js');
 
-function listCommand(dir, labels){
+function listCommand(dir){
 	var dirLabel = "";
-	var files = [];
-	fs.readdirSync(dir).forEach(file => {
-  		files.push(file + "\n");
-	});
+	var rc_code = 1;
+	var manFiles = [];
 
-	for(var i = 0; i < labels.length; i++){
-		dirLabel += "File: " + files[i] + " Label: " + labels[i] + "\n";
+    while(fs.existsSync(path.join(dir, '.man-' + String(rc_code) + '.rc')))
+    {
+        manFiles.push('.man-' + String(rc_code) + '.rc');
+        rc_code += 1;
+    }
+
+	for(var i = 0; i < manFiles.length; i++){
+		dirLabel += "File: " + manFiles[i] + " Labels: ";
+		var labels = getLabels(path.join(dir, manFiles[i]));
+		labels = labels.slice(1, labels.length - 1);
+		labels.forEach(l => {
+			dirLabel += l + ", ";
+		});
+		dirLabel += "<br>";
 	}
 
 	return dirLabel;

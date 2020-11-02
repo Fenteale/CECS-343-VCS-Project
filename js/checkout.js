@@ -3,11 +3,40 @@ var fs = require('fs');
 var path = require('path');
 var getFs = require('./getfiles.js');
 var manifest = require('./manifest.js');
+const { getLabels } = require('./label.js');
 
 function checkout(req){
-
 	//Run command to checkout here.
 	var pathOfMan = path.join(req.query.repoPath, req.query.manName);
+
+	//LABEL STUFF
+	if(!fs.existsSync(pathOfMan))
+	{
+		var realManFile;
+		var rc_code = 1;
+		var manFiles = [];
+
+		while(fs.existsSync(path.join(req.query.repoPath, '.man-' + String(rc_code) + '.rc')))
+		{
+			manFiles.push('.man-' + String(rc_code) + '.rc');
+			rc_code += 1;
+		}
+		manFiles.forEach(mf => {
+			getLabels(path.join(req.query.repoPath, mf)).forEach( l => {
+				if(l === req.query.manName)
+					realManFile = mf;
+			});
+		});
+		var pathOfMan = path.join(req.query.repoPath, realManFile);
+	}
+	//END LABEL STUFF
+
+
+
+
+
+
+	
 
 	if(!fs.existsSync(req.query.targetPath))
 	{
@@ -49,6 +78,7 @@ function checkout(req){
 
 function createCheckoutManifest(repoPath, targetPath, manName, files)
 {
+
 	var rc_code = 1;
 	while(fs.existsSync(path.join(targetPath, '.man-' + String(rc_code) + '.rc')))
 	{

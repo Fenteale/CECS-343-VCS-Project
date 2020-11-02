@@ -49,7 +49,7 @@ function getLabels(manPath)
     var labels = [];
 
     labelLine[0].split(" ").forEach(l => {
-        if(l.trim() !== "labels:" || l.trim() !== "\n" || l.trim() !== "") //I guess there is a bug here where it will fail if the label you are trying to set is "label:", but whatever
+        if(l.trim() !== "labels: " || l.trim() !== "\n" || l.trim() !== "") //I guess there is a bug here where it will fail if the label you are trying to set is "label:", but whatever
             labels.push(l.trim());
     });
     return labels;
