@@ -14,7 +14,7 @@
 var fs = require('fs');
 var path = require('path');
 
-function createManifest(srcPath, repoPath, artIDs, relPaths)
+function createManifest(srcPath, repoPath, files, artIDs, relPaths)
 {
 	var rc_code = 1;
 	while(fs.existsSync(path.join(repoPath, '.man-' + String(rc_code) + '.rc')))
@@ -32,7 +32,7 @@ function createManifest(srcPath, repoPath, artIDs, relPaths)
 	writeStream.write("labels: \n");
 	var artRel = "";
 	for(var i = 0; i < artIDs.length; i++) { //creates a String with artID's and relative paths
-		artRel += artIDs[i] + ' @ ' + relPaths[i] + '\n'; 
+		artRel += artIDs[i] + ' @ ' + relPaths[i] + ' @ ' + path.basename(files[i]) + '\n'; 
 	}
 	writeStream.write(artRel); // writes the artID and relative paths to file
 	writeStream.end(); //closes writeStream

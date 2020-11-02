@@ -67,7 +67,7 @@ app.get('/create', function (req, res) {
 	});
 
 	//create manifest file.
-	manifest.createManifest(req.query.srcPath, req.query.repoPath, artIDs, fileDirs);
+	manifest.createManifest(req.query.srcPath, req.query.repoPath, files, artIDs, fileDirs);
 
 	//then display the webpage again.
 	res.send(getWebpageData("<p>Created repo.</p>"));
