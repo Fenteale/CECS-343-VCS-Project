@@ -118,7 +118,7 @@ app.get('/checkout', function (req, res) {
 	});
 
 	//change this for this function
-	manifest.createManifest(req.query.srcPath, req.query.targetPath, artIDs, fileDirs);
+	manifest.createManifest(req.query.srcPath, req.query.targetPath, files, fileDirs);
 
 	res.send(getWebpageData("<p>Successfully ran checkout.</p>"));
 });
