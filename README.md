@@ -70,3 +70,43 @@ For UNIX:
 ```		
 create /home/user/Documents/Project /home/user/Documents/Repository
 ```
+
+
+- 'checkin' - creates a snapshot of a source directory and outputs to an already existing repository.
+
+Usage:
+``` 
+checkin srcDir repoDir
+srcDir	- full path to source directory
+repoDir - full path to repository directory
+```
+
+- 'checkout' - clones a repository into a target directory.
+
+Usage:
+``` 
+checkout repoDir targetDir manifestName
+repoDir - full path to repository directory
+targetDir - full path to the target directory to clone to
+manifestName - exact file name or associated label of a manifest file.
+```
+
+- 'label' - sets a label to a manifest file
+
+Usage:
+``` 
+label repoDir manifestName label
+repoDir - full path to repository directory
+manifestName - exact file name of the manifest file you want to add the label to.
+label - label to set on the manifest file.
+```
+
+- 'list' - lists all the manifest files and their associated labels within a repo.
+
+Usage:
+``` 
+list repoDir
+repoDir - full path to repository directory
+```
+
+

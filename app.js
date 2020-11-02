@@ -81,16 +81,19 @@ app.get('/list', function (req, res) {
 });
 
 app.get('/label', function (req, res) {
+	// The command to set labels is run here.
+	//get the path to the manifest file.
 	var pathOfMan = path.join(req.query.repoPath, req.query.manName);
+	//check the return value of the setLabel command
 	switch(label.setLabel(req.query.repoPath, pathOfMan, req.query.labelName))
 	{
-		case 0:
+		case 0: //if its 0 that means it was successful
 			res.send(getWebpageData("<p>Successfully set label.</p>"));
 			break;
-		case -1:
+		case -1: //if its -1 that means the label already exists in some form
 			res.send(getWebpageData("<p>Failed to set label, that label already exists for that manifest.</p>"));
 			break;
-		default:
+		default: //some other unhandled error
 			res.send(getWebpageData("<p>Failed to set label.</p>"));
 			break;
 	}
@@ -98,8 +101,10 @@ app.get('/label', function (req, res) {
 });
 
 app.get('/checkout', function (req, res) {
+	//run the checkout function.
 	checkout.checkout(req)
 
+	//display that it finished to the webpage
 	res.send(getWebpageData("<p>Successfully ran checkout.</p>"));
 });
 
