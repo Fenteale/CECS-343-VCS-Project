@@ -25,6 +25,8 @@ var pn = require('./js/projName.js');
 var label = require('./js/label.js');
 var checkout = require('./js/checkout.js');
 var listCmd = require('./js/list.js');
+var merge_in = require('./js/merge-in.js');
+var merge_out = require('./js/merge-out.js');
 
 function getWebpageData(extraData)
 {
@@ -143,6 +145,20 @@ app.get('/checkin', function (req, res) {  //lotsa this copied from create
 		//then display the webpage again.
 		res.send(getWebpageData("<p>Successfully ran checkin.</p>"));
 	}
+});
+
+app.get('/merge-in', function(req, res) {
+	//run merge-in command here
+	merge_in.merge_in();
+	//then display the webpage again.
+	res.send(getWebpageData("<p>Successfully ran merge-in.</p>"));
+});
+
+app.get('/merge-out', function(req, res) {
+	//run merge-in command here
+	merge_out.merge_out();
+	//then display the webpage again.
+	res.send(getWebpageData("<p>Successfully ran merge-out.</p>"));
 });
 
 app.listen(3000, function () { // Set callback action function on network port.
