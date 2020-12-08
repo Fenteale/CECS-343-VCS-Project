@@ -149,7 +149,7 @@ app.get('/checkin', function (req, res) {  //lotsa this copied from create
 
 app.get('/merge-in', function(req, res) {
 	//run merge-in command here
-	merge_in.merge_in();
+	merge_in.merge_in(req.query.repoPath, req.query.srcPath);
 	//then display the webpage again.
 	res.send(getWebpageData("<p>Successfully ran merge-in.</p>"));
 });
