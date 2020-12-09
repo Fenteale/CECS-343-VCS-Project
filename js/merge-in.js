@@ -39,7 +39,7 @@ function merge_in(repo, target, res)
 		});
 
 		//create manifest file.
-        manifest.createManifest(target, repo, artIDs, fileDirs);
+        manifest.createManifest(target, repo, files, artIDs, fileDirs);
 	}
 }
 

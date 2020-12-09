@@ -140,7 +140,7 @@ app.get('/checkin', function (req, res) {  //lotsa this copied from create
 		});
 
 		//create manifest file.
-		manifest.createManifest(req.query.srcPath, req.query.repoPath, artIDs, fileDirs);
+		manifest.createManifest(req.query.srcPath, req.query.repoPath, files, artIDs, fileDirs);
 
 		//then display the webpage again.
 		res.send(getWebpageData("<p>Successfully ran checkin.</p>"));
