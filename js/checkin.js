@@ -7,18 +7,22 @@ var getFs = require('./getfiles.js');
 var artID = require('./artID.js');
 var manifest = require('./manifest.js');
 var pn = require('./projName.js');
+var getWebpageData = require('./getWebPageData');
 
-/*
-function merge_in(repo, target, res)
+function checkin(repo, target, res, full = true)
 {
-    //if user sends a request to /merge-in, then we need to make a snapshot
+	//if user sends a request to /checkin, then we need to make a snapshot
 	if(!fs.existsSync(repo))
 	{
-		res.send(getWebpageData("<p>Directory is not a repository.</p>"));
+		res.send(getWebpageData.getWebpageData("<p>Directory is not a repository.</p>"));
 	}
 	else
 	{
 
+		//var projName = pn.getProjectName(req.query.srcPath); //get project name
+
+
+		//var files = getFs.getFileArray(req.query.srcPath); //get array of files
 		var projName = pn.getProjectName(target); //get project name
 
 
@@ -30,19 +34,22 @@ function merge_in(repo, target, res)
 		var fileDirs = [];
 		files.forEach(file => {
 			//for each file in the files array
+			//var aID = artID.createArtID(file, req.query.srcPath, projName); //createArtID for each file
 			var aID = artID.createArtID(file, target, projName); //createArtID for each file
 			console.log(aID); //print it to console
 			artIDs.push(aID); //add it to the array of artIDs
 			fileDirs.push(path.dirname(file)); //add relative path of file to the fileDirs array
 
 			//copy each file in the files array to the repo directory and name it based off the artID.
-			fs.copyFileSync(path.join(target, file), path.join(repo, aID));
+			//fs.copyFileSync(path.join(req.query.srcPath, file), path.join(req.query.repoPath, aID));
+			if(full)
+				fs.copyFileSync(path.join(target, file), path.join(repo, aID));
 		});
 
 		//create manifest file.
-        manifest.createManifest(target, repo, files, artIDs, fileDirs);
+		//manifest.createManifest(req.query.srcPath, req.query.repoPath, files, artIDs, fileDirs);
+		manifest.createManifest(target, repo, files, artIDs, fileDirs);
 	}
 }
 
-module.exports = { merge_in } ;
-*/
+module.exports = {checkin}

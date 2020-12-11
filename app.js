@@ -25,20 +25,15 @@ var pn = require('./js/projName.js');
 var label = require('./js/label.js');
 var checkout = require('./js/checkout.js');
 var listCmd = require('./js/list.js');
-var merge_in = require('./js/merge-in.js');
+//var merge_in = require('./js/merge-in.js');
+var getWebpageData = require('./js/getWebPageData.js');
+var checkin = require('./js/checkin.js');
 var merge_out = require('./js/merge-out.js');
 
-function getWebpageData(extraData)
-{
-	return fs.readFileSync(path.join(__dirname, 'index_top.html'), 
-			  {encoding:'utf8', flag:'r'}) + extraData +
-			  fs.readFileSync(path.join(__dirname, 'index_bot.html'), 
-              {encoding:'utf8', flag:'r'}); 
-}
 
 app.get('/', function (req, res) { //Set page-gen fcn for URL root request.
 
-	res.send(getWebpageData(''));
+	res.send(getWebpageData.getWebpageData(''));
 });
 
 
@@ -74,12 +69,12 @@ app.get('/create', function (req, res) {
 	manifest.createManifest(req.query.srcPath, req.query.repoPath, files, artIDs, fileDirs);
 
 	//then display the webpage again.
-	res.send(getWebpageData("<p>Created repo.</p>"));
+	res.send(getWebpageData.getWebpageData("<p>Created repo.</p>"));
 });
 
 app.get('/list', function (req, res) {
 	//Run command to list and return it to the argument of getWebpageData
-	res.send(getWebpageData(listCmd.listCommand(req.query.repoPath)));
+	res.send(getWebpageData.getWebpageData(listCmd.listCommand(req.query.repoPath)));
 });
 
 app.get('/label', function (req, res) {
@@ -90,13 +85,13 @@ app.get('/label', function (req, res) {
 	switch(label.setLabel(req.query.repoPath, pathOfMan, req.query.labelName))
 	{
 		case 0: //if its 0 that means it was successful
-			res.send(getWebpageData("<p>Successfully set label.</p>"));
+			res.send(getWebpageData.getWebpageData("<p>Successfully set label.</p>"));
 			break;
 		case -1: //if its -1 that means the label already exists in some form
-			res.send(getWebpageData("<p>Failed to set label, that label already exists for that manifest.</p>"));
+			res.send(getWebpageData.getWebpageData("<p>Failed to set label, that label already exists for that manifest.</p>"));
 			break;
 		default: //some other unhandled error
-			res.send(getWebpageData("<p>Failed to set label.</p>"));
+			res.send(getWebpageData.getWebpageData("<p>Failed to set label.</p>"));
 			break;
 	}
 		
@@ -107,58 +102,27 @@ app.get('/checkout', function (req, res) {
 	checkout.checkout(req)
 
 	//display that it finished to the webpage
-	res.send(getWebpageData("<p>Successfully ran checkout.</p>"));
+	res.send(getWebpageData.getWebpageData("<p>Successfully ran checkout.</p>"));
 });
 
 app.get('/checkin', function (req, res) {  //lotsa this copied from create
-	//if user sends a request to /checkin, then we need to make a snapshot
-	if(!fs.existsSync(req.query.repoPath))
-	{
-		res.send(getWebpageData("<p>Directory is not a repository.</p>"));
-	}
-	else
-	{
-
-		var projName = pn.getProjectName(req.query.srcPath); //get project name
-
-
-		var files = getFs.getFileArray(req.query.srcPath); //get array of files
-		console.log(files); //print them to console for debugging.
-
-		var artIDs = [];
-
-		var fileDirs = [];
-		files.forEach(file => {
-			//for each file in the files array
-			var aID = artID.createArtID(file, req.query.srcPath, projName); //createArtID for each file
-			console.log(aID); //print it to console
-			artIDs.push(aID); //add it to the array of artIDs
-			fileDirs.push(path.dirname(file)); //add relative path of file to the fileDirs array
-
-			//copy each file in the files array to the repo directory and name it based off the artID.
-			fs.copyFileSync(path.join(req.query.srcPath, file), path.join(req.query.repoPath, aID));
-		});
-
-		//create manifest file.
-		manifest.createManifest(req.query.srcPath, req.query.repoPath, files, artIDs, fileDirs);
-
-		//then display the webpage again.
-		res.send(getWebpageData("<p>Successfully ran checkin.</p>"));
-	}
+	checkin.checkin(req.query.repoPath, req.query.srcPath, res);
+	
+	res.send(getWebpageData.getWebpageData("<p>Successfully ran checkin.</p>"));
 });
 
 app.get('/merge-in', function(req, res) {
 	//run merge-in command here
-	merge_in.merge_in(req.query.repoPath, req.query.srcPath);
+	checkin.checkin(req.query.repoPath, req.query.srcPath, res);
 	//then display the webpage again.
-	res.send(getWebpageData("<p>Successfully ran merge-in.</p>"));
+	res.send(getWebpageData.getWebpageData("<p>Successfully ran merge-in.</p>"));
 });
 
 app.get('/merge-out', function(req, res) {
 	//run merge-in command here
 	merge_out.merge_out();
 	//then display the webpage again.
-	res.send(getWebpageData("<p>Successfully ran merge-out.</p>"));
+	res.send(getWebpageData.getWebpageData("<p>Successfully ran merge-out.</p>"));
 });
 
 app.listen(3000, function () { // Set callback action function on network port.
