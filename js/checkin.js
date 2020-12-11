@@ -48,7 +48,10 @@ function checkin(repo, target, res, full = true)
 
 		//create manifest file.
 		//manifest.createManifest(req.query.srcPath, req.query.repoPath, files, artIDs, fileDirs);
-		manifest.createManifest(target, repo, files, artIDs, fileDirs);
+		if(full)
+			manifest.createManifest(target, repo, files, artIDs, fileDirs);
+		else
+			manifest.createManifest(target, target, files, artIDs, fileDirs, 'merge');
 	}
 }
 

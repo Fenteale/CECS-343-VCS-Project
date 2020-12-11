@@ -14,14 +14,14 @@
 var fs = require('fs');
 var path = require('path');
 
-function createManifest(srcPath, repoPath, files, artIDs, relPaths)
+function createManifest(srcPath, repoPath, files, artIDs, relPaths, manRootName = 'man')
 {
 	var rc_code = 1;
-	while(fs.existsSync(path.join(repoPath, '.man-' + String(rc_code) + '.rc')))
+	while(fs.existsSync(path.join(repoPath, '.' + manRootName + '-' + String(rc_code) + '.rc')))
 	{
 		rc_code += 1; //changes int assigned to file name based off number of files created
 	}
-	var dest = path.join(repoPath, '.man-' + String(rc_code) + '.rc'); //writes out path to file
+	var dest = path.join(repoPath, '.' + manRootName + '-' + String(rc_code) + '.rc'); //writes out path to file
 	var writeStream = fs.createWriteStream(dest); //creates a writeStream to write into file
 	writeStream.write('create ' + srcPath + ' ' + repoPath + '\n'); //writes the source path and repo path to file
 	var presentTime = new Date(); //creates a Date object

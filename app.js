@@ -120,7 +120,7 @@ app.get('/merge-in', function(req, res) {
 
 app.get('/merge-out', function(req, res) {
 	//run merge-in command here
-	merge_out.merge_out();
+	merge_out.merge_out(req.query.repoPath, req.query.srcPath, res);
 	//then display the webpage again.
 	res.send(getWebpageData.getWebpageData("<p>Successfully ran merge-out.</p>"));
 });
