@@ -21,21 +21,24 @@ function createManifest(srcPath, repoPath, files, artIDs, relPaths, manRootName 
 	{
 		rc_code += 1; //changes int assigned to file name based off number of files created
 	}
+	
 	var dest = path.join(repoPath, '.' + manRootName + '-' + String(rc_code) + '.rc'); //writes out path to file
-	var writeStream = fs.createWriteStream(dest); //creates a writeStream to write into file
-	writeStream.write('create ' + srcPath + ' ' + repoPath + '\n'); //writes the source path and repo path to file
+	console.log("Dest: " + dest);
+
+	var writeStream = fs.openSync(dest, 'w'); //creates a writeStream to write into file
+	fs.writeSync(writeStream, 'create ' + srcPath + ' ' + repoPath + '\n'); //writes the source path and repo path to file
 	var presentTime = new Date(); //creates a Date object
 	var date = presentTime.getFullYear() + '-' + (presentTime.getMonth()+1) + '-' + presentTime.getDate(); //creates date in correct format
 	var time = presentTime.getHours() + ':' + presentTime.getMinutes() + ':' + presentTime.getSeconds(); //creates time in correct format
 	var current = date + ' ' + time; //puts together full date and time in correct format
-	writeStream.write(current + '\n'); //writes the date and time to file
-	writeStream.write("labels: \n");
+	fs.writeSync(writeStream, current + '\n'); //writes the date and time to file
+	fs.writeSync(writeStream, "labels: \n");
 	var artRel = "";
 	for(var i = 0; i < artIDs.length; i++) { //creates a String with artID's and relative paths
 		artRel += artIDs[i] + ' @ ' + relPaths[i] + ' @ ' + path.basename(files[i]) + '\n'; 
 	}
-	writeStream.write(artRel); // writes the artID and relative paths to file
-	writeStream.end(); //closes writeStream
+	fs.writeSync(writeStream, artRel); // writes the artID and relative paths to file
+	fs.closeSync(writeStream); //closes writeStream
 }
 
 module.exports = { createManifest };

@@ -12,7 +12,7 @@ var getWebpageData = require('./getWebPageData');
 function checkin(repo, target, res, full = true)
 {
 	//if user sends a request to /checkin, then we need to make a snapshot
-	if(!fs.existsSync(repo))
+	if(!fs.existsSync(repo) && full)
 	{
 		res.send(getWebpageData.getWebpageData("<p>Directory is not a repository.</p>"));
 	}
