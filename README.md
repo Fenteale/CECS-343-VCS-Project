@@ -109,4 +109,20 @@ list repoDir
 repoDir - full path to repository directory
 ```
 
+- 'merge-out' - Pulls changes from repository and handles merge conflicts.
 
+Usage:
+``` 
+merge-out targetDir repoDir
+targetDir - full path to the target directory to merge onto
+repoDir - full path to repository directory
+```
+
+- 'merge-in' - Pushes changes from target directory to a repository.
+
+Usage:
+``` 
+merge-in targetDir repoDir
+targetDir - full path to the target directory to get files from
+repoDir - full path to repository directory to merge onto
+```

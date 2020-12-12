@@ -25,7 +25,6 @@ var pn = require('./js/projName.js');
 var label = require('./js/label.js');
 var checkout = require('./js/checkout.js');
 var listCmd = require('./js/list.js');
-//var merge_in = require('./js/merge-in.js');
 var getWebpageData = require('./js/getWebPageData.js');
 var checkin = require('./js/checkin.js');
 var merge_out = require('./js/merge-out.js');

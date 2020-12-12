@@ -1,3 +1,15 @@
+//###########################################################
+//
+// app.js
+//
+// Author:
+// contact:
+//
+// Description: Main entry point for our application.  It sets
+// up the Express instance and handle requests for commands.
+//
+//###########################################################
+
 const path = require('path');	//Include path
 var fs = require('fs');			//Include filesystem
 
